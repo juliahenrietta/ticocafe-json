@@ -5,10 +5,11 @@ function käsitteleData(data) {
 
     // Muodostetaan HTML-sisältö JSON-datan perusteella
     const htmlContent = `
-        <p><strong>Yritys:</strong> ${data.yritys}</p>
-        <p><strong>Osoite:</strong> ${data.yhteystiedot.osoite}</p>
-        <p><strong>Puhelin:</strong> ${data.yhteystiedot.puhelin}</p>
-        <p><strong>Sähköposti:</strong> ${data.yhteystiedot.email}</p>
+        <h2>${data.yritys}</h2>
+        <p><strong>Yhteystiedot:</strong></p>
+        <p>Osoite: ${data.yhteystiedot.osoite}</p>
+        <p>Puhelin: ${data.yhteystiedot.puhelin}</p>
+        <p>Sähköposti: ${data.yhteystiedot.email}</p>
         <p><strong>Tuotteet:</strong> ${data.tuotteet.join(", ")}</p>
         <h3>Henkilökunta:</h3>
         <ul>
@@ -22,7 +23,7 @@ function käsitteleData(data) {
     contentDiv.innerHTML = htmlContent;
 }
 
-// Haetaan JSON-tiedosto GitHubista 
+// Haetaan JSON-tiedosto GitHub Pages -sivustolta
 fetch('https://juliahenrietta.github.io/ticocafe-json/data.json')
     // Muunnetaan vastaus JSON-muotoon
     .then(function (response) {
