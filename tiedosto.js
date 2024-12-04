@@ -1,43 +1,40 @@
-fetch('https://raw.githubusercontent.com/your-repo-path/tico-cafe-data.json')
-    .then(function(response) {
-        return response.json(); 
-    })
-    .then(function(responseJson) {
-     
-        kerro(responseJson); 
-    })
-    .catch(function(error) {
-        // Jos tulee virhe
-        document.getElementById("vastaus").innerHTML =
-        "<p>Tietoa ei pystytä hakemaan</p>";
-    });
+// Funktio, joka käsittelee JSON-datan ja näyttää sen sivulla
+function käsitteleData(data) {
+    // Kohdistetaan sisältöalueeseen
+    const contentDiv = document.getElementById("content");
 
-function kerro(data) {
-    var teksti = "";  // Muuttuja tiedon keräämiseen
-    
-    // Yrityksen nimi
-    teksti += "<h2>" + data.yritys + "</h2>";
-    
-    // Yhteystiedot
-    teksti += "<h3>Yhteystiedot</h3>";
-    teksti += "<p>Osoite: " + data.yhteystiedot.osoite + "</p>";
-    teksti += "<p>Puhelin: " + data.yhteystiedot.puhelin + "</p>";
-    teksti += "<p>Email: " + data.yhteystiedot.email + "</p>";
+    // Muodostetaan HTML-sisältö JSON-datan perusteella
+    const htmlContent = `
+        <p><strong>Yritys:</strong> ${data.yritys}</p>
+        <p><strong>Osoite:</strong> ${data.yhteystiedot.osoite}</p>
+        <p><strong>Puhelin:</strong> ${data.yhteystiedot.puhelin}</p>
+        <p><strong>Sähköposti:</strong> ${data.yhteystiedot.email}</p>
+        <p><strong>Tuotteet:</strong> ${data.tuotteet.join(", ")}</p>
+        <h3>Henkilökunta:</h3>
+        <ul>
+            ${data.henkilokunta
+                .map(h => `<li>${h.nimi} - ${h.titteli}</li>`)
+                .join("")}
+        </ul>
+    `;
 
-    // Tuotteet 
-    teksti += "<h3>Tuotteet:</h3><ul>";
-    for (var i = 0; i < data.tuotteet.length; i++) {
-        teksti += "<li>" + data.tuotteet[i] + "</li>";
-    }
-    teksti += "</ul>";
-
-    // Henkilökunta 
-    teksti += "<h3>Henkilökunta:</h3><ul>";
-    for (var i = 0; i < data.henkilokunta.length; i++) {
-        teksti += "<li>" + data.henkilokunta[i].nimi + " - " + data.henkilokunta[i].titteli + "</li>";
-    }
-    teksti += "</ul>";
-
-    // Tulostetaan kerätty teksti div-elementtiin
-    document.getElementById("vastaus").innerHTML = teksti;
+    // Asetetaan sisältö HTML-sivulle
+    contentDiv.innerHTML = htmlContent;
 }
+
+// Haetaan JSON-tiedosto GitHubista 
+fetch('https://juliahenrietta.github.io/ticocafe-json/data.json')
+    // Muunnetaan vastaus JSON-muotoon
+    .then(function (response) {
+        return response.json();
+    })
+    // Kutsutaan käsittelyfunktiota JSON-datan kanssa
+    .then(function (responseJson) {
+        käsitteleData(responseJson); // JSON-datan käsittely
+    })
+    // Jos tuli jokin virhe, näytetään virheilmoitus
+    .catch(function (error) {
+        document.getElementById("vastaus").innerHTML =
+            "<p>Tietoa ei pystytä hakemaan</p>";
+        console.error('Virhe tietojen lataamisessa:', error);
+    });
