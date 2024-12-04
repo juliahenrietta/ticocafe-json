@@ -7,36 +7,11 @@
 </head>
 <body>
     <h1>Tico Cafe Tiedot</h1>
-    <div id="vastaus">
-        {
-  "yritys": "Tico Cafe",
-  "yhteystiedot": {
-    "osoite": "Ratapihantie 13, Helsinki",
-    "puhelin": "040 404 4040",
-    "email": "info@ticocafe.com"
-  },
-  "tuotteet": [
-    "makeat kahvileivät",
-    "suolaiset piiraat",
-    "erikoiskahvit"
-  ],
-  "henkilokunta": [
-    {
-      "nimi": "Mikko Mallikas",
-      "titteli": "toimitusjohtaja"
-    },
-    {
-      "nimi": "Anna Malli",
-      "titteli": "barista"
-    },
-    {
-      "nimi": "Esa Merkki",
-      "titteli": "kondiittori"
-    }
-  ]
-}
+    <!-- Tähän kohtaan lisätään dynaamisesti sisältö JavaScriptillä -->
+    <div id="content"></div>
 
-    </div> <!-- Tässä divissä näkyy JSON-data -->
+    <!-- Tähän näytetään mahdolliset viestit tai virheet -->
+    <div id="vastaus"></div>
 
     <!-- Linkitetään ulkoinen JavaScript-tiedosto -->
     <script src="tiedosto.js"></script>
